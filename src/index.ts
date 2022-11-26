@@ -1,5 +1,7 @@
-import { APIEmbed } from "discord-api-types/v10";
-import { getGames } from "epic-free-games";
+import { createCors } from "itty-cors";
+import { IHTTPMethods, Router } from "itty-router";
+import { error } from "itty-router-extras";
+import { addOutboundLinks, getData, sendWebhooks } from "./lib";
 
 export interface Env {
 	webhookLinks: KVNamespace;
@@ -12,81 +14,39 @@ export interface Env {
 	dashboardLink: string;
 }
 
-const getOutboundLinks = async (env: Env): Promise<string[]> => {
-	const data = JSON.parse(
-		(await env.webhookLinks.get(env.webhookLinksKey).catch((err) => {
-			console.error("Something went wrong when accessing KV");
-			throw err;
-		})) || ""
-	);
+const router = Router<void, IHTTPMethods>();
 
-	if (!Array.isArray(data))
-		throw new Error("Outbound links are not an array");
-	return data;
-};
+// Handle CORS
+const { preflight, corsify } = createCors({ origins: ["*"] });
+router.all("*", preflight);
 
-const addOutboundLinks = (env: Env, newLink: string) => {
-	getOutboundLinks(env).then((data) =>
-		env.webhookLinks.put(
-			env.webhookLinksKey,
-			JSON.stringify([...data, newLink])
-		)
-	);
-};
+router.get("/", (request, env: Env, context) =>
+	Response.redirect(
+		env.dashboardLink || "https://github.com/kennanhunter/",
+		308
+	)
+);
 
-const getData = async (env: Env): Promise<APIEmbed[]> => {
-	return (await getGames("US")).currentGames
-		.map((data, index): APIEmbed | undefined => {
-			// Discord disallows sending more than 10 embeds
-			if (index >= 10) return undefined;
+router.get("/getGames", async (request, env: Env, context) => {
+	return Response.json(await getData(env));
+});
 
-			return {
-				title: data.title,
-				description: data.description,
-				timestamp: data.effectiveDate,
-				image: {
-					url: data.keyImages[0].url,
-				},
-				color: env.embedColor,
-			} as APIEmbed;
-		})
-		.filter((val) => val !== undefined) as APIEmbed[];
-};
+router.post("/sendWebhooks", (request, env: Env, context) => {
+	return sendWebhooks(env);
+});
 
-const getLastIds = async (env: Env) =>
-	JSON.parse((await env.webhookLinks.get(env.lastIdsKey)) || "[]");
-
-const postToOutboundLinks = async (env: Env) => {
-	const outbound = await getOutboundLinks(env);
-	const data = await getData(env);
-	const body = JSON.stringify({
-		content: "New Free Epic Games Deals!!!",
-		username: "Free Games Alert",
-		embeds: data,
+router.post("/addWebhook", async (request, env: Env, context) => {
+	if (!request.json) return error(400, "What?");
+	const data: { newLink: string } = await request.json().catch((err) => {
+		return error(400, "Wrongly formatted JSON");
 	});
 
-	outbound.map((link) =>
-		fetch(link, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: body,
-		}).then((response) => console.log(response.statusText))
-	);
-};
-
-const sendWebhooks = async (env: Env) =>
-	await postToOutboundLinks(env).then(
-		async () =>
-			new Response(
-				`Posting successful to ${
-					(
-						await env.webhookLinks.list()
-					).keys.length
-				} webhooks`
-			)
-	);
+	if (data.newLink) {
+		return addOutboundLinks(env, data.newLink).then(
+			() => new Response("Successful")
+		);
+	}
+});
 
 export default {
 	async scheduled(
@@ -97,35 +57,11 @@ export default {
 		sendWebhooks(env);
 	},
 
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const { url, method } = request;
-		const { pathname } = new URL(url);
-
-		if (method === "GET") {
-			if (pathname === "/getGames")
-				return Response.json(await getData(env));
-		}
-
-		if (method === "POST") {
-			if (pathname === "/sendWebhooks") {
-				return sendWebhooks(env);
-			}
-
-			request.json().then((data) => {
-				if (!data) throw new Error("Fuckkkk");
-				if (pathname === "/addWebhook") {
-					if ((data as { newLink: string }).newLink) {
-						addOutboundLinks(
-							env,
-							(data as { newLink: string }).newLink
-						);
-					}
-				}
-			});
-		}
-
-		return Response.redirect(
-			env.dashboardLink || "https://github.com/kennanhunter/"
-		);
-	},
+	fetch: (...args: any[]) =>
+		router
+			// @ts-ignore // typescript :(
+			.handle(...args)
+			.then((response) => response)
+			.catch((err) => error(500, err.stack))
+			.then(corsify),
 };

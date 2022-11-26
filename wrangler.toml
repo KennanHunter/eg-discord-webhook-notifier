@@ -7,7 +7,7 @@ kv_namespaces = [
 ]
 
 [triggers]
-crons = ["0 0 0/3 ? * * *"]
+crons = ["1 * * * *"]
 
 [vars]
 webhookLinksKey = "links"
