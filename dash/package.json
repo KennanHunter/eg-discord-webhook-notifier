@@ -21,5 +21,7 @@
 		"vite": "^3.1.0"
 	},
 	"type": "module",
-	"dependencies": {}
+	"dependencies": {
+		"@sveltejs/adapter-static": "^1.0.0-next.48"
+	}
 }
