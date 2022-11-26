@@ -1,0 +1,18 @@
+{
+	"name": "free-games-alert",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler publish"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20221111.1",
+		"typescript": "^4.9.3",
+		"wrangler": "^2.0.16"
+	},
+	"dependencies": {
+		"epic-free-games": "KennanHunter/epic-free-games"
+	}
+}

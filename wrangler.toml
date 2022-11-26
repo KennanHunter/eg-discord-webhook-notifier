@@ -1,0 +1,10 @@
+name = "free-games-alert"
+main = "src/index.ts"
+compatibility_date = "2022-11-26"
+
+kv_namespaces = [
+    { binding = "webhookLinks", id = "e2b4838e1a9940c08200ee2c3e900b90", preview_id = "e2b4838e1a9940c08200ee2c3e900b90" },
+]
+
+[triggers]
+crons = ["1 * * * *"]
