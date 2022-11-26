@@ -7,4 +7,10 @@ kv_namespaces = [
 ]
 
 [triggers]
-crons = ["1 * * * *"]
+crons = ["0 0 0/3 ? * * *"]
+
+[vars]
+webhookLinksKey = "links"
+lastIdsKey = "lastIds"
+embedColor = 9442302
+# dashboardLink = ""
