@@ -198,23 +198,16 @@
     ws "^8.2.2"
 
 "@types/better-sqlite3@^7.6.0":
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/@types/better-sqlite3/-/better-sqlite3-7.6.2.tgz#6ffa6379df60f30beb79d997102ff43412cde55c"
-  integrity sha512-RgmaapusqTq6IMAr4McMyAsC6RshYTCjXCnzwVV59WctUxC8bNPyUfT9t5F81lKcU41lLurhjqjoMHfauzfqGg==
+  version "7.6.3"
+  resolved "https://registry.yarnpkg.com/@types/better-sqlite3/-/better-sqlite3-7.6.3.tgz#117c3c182e300799b84d1b7e1781c27d8d536505"
+  integrity sha512-YS64N9SNDT/NAvou3QNdzAu3E2om/W/0dhORimtPGLef+zSK5l1vDzfsWb4xgXOgfhtOI5ZDTRxnvRPb22AIVQ==
   dependencies:
     "@types/node" "*"
 
-"@types/itty-router-extras@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@types/itty-router-extras/-/itty-router-extras-0.4.0.tgz#d3909f7c9c63d82ede082603d52715bea8e4dde2"
-  integrity sha512-IcXmXB8vVbjWy4McZjKzo+3sdQyzMpyHi5mQ4iViu6yX9cS/SVlGR+6H/AgzfG32svaQJeOhl2gfXYwf1AKEgg==
-  dependencies:
-    itty-router "^2.3.10"
-
 "@types/node@*":
-  version "18.11.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.9.tgz#02d013de7058cea16d36168ef2fc653464cfbad4"
-  integrity sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==
+  version "18.11.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
+  integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
 "@types/stack-trace@0.0.29":
   version "0.0.29"
@@ -299,10 +292,10 @@ cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-discord-api-types@^0.37.20:
-  version "0.37.20"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.20.tgz#f23894e3e6b894abb5431ff6c4aa52471360377c"
-  integrity sha512-uAO+55E11rMkYR36/paE1vKN8c2bZa1mgrIaiQIBgIZRKZTDIGOZB+8I5eMRPFJcGxrg16riUu+0aTu2JQEPew==
+discord-api-types@^0.37.24:
+  version "0.37.25"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.25.tgz#bee7fd09bd4afb9d0e2983ef837ca1cad5df0e5c"
+  integrity sha512-aCwA2sWnL1zPQgTELkkMzQneuWyCXXUjZCUKswesiE6RDCfOfxAPXOHg6ZTlBA5layPSikGCBBRjyh8S3Wzd+A==
 
 dotenv@^10.0.0:
   version "10.0.0"
@@ -490,6 +483,11 @@ glob-parent@~5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
+hono@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-2.7.1.tgz#c7c1ef1ccdf242a79da68a7a2b6a0858b1b84a60"
+  integrity sha512-hx2pTusx2hD8IAiQfXXX9iapOuqGTJapqX3hg5a7bC7FQemFEiQfVNK/r5F4GnsdJB7AlsGT4ah9fIYh3vmJnw==
+
 html-rewriter-wasm@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/html-rewriter-wasm/-/html-rewriter-wasm-0.4.1.tgz#235e3d96c1aa4bfd2182661ee13881e290ff5ff2"
@@ -538,21 +536,6 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
-
-itty-cors@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/itty-cors/-/itty-cors-0.3.4.tgz#8c334ca053b659e754b054543b741fed76067826"
-  integrity sha512-rfI8rcU27+LHN2xuKaaT670mvfQNzfINFtpd0Z8Q2Nu8nP9cKzsd+kUEwY5DVcieF1CXhjpDO3FkS/litFnFYA==
-
-itty-router-extras@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/itty-router-extras/-/itty-router-extras-0.4.2.tgz#e46891ebea63f09ada74603649d8a6c4ce0c5df7"
-  integrity sha512-ppHaBzcTXs7idFSDISehG+8kif2/4aqLCfyY/Y/uIZv79sfEfNmTq9G+rDeqblun/VZRBiXZD8ztYmMS8EOsKw==
-
-itty-router@^2.3.10, itty-router@^2.6.6:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/itty-router/-/itty-router-2.6.6.tgz#78a08c3b7dc1bd90ce832cae8eff7e4cbfbf67ef"
-  integrity sha512-hIPHtXGymCX7Lzb2I4G6JgZFE4QEEQwst9GORK7sMYUpJvLfy4yZJr95r04e8DzoAnj6HcxM2m4TbK+juu+18g==
 
 kleur@^4.1.4:
   version "4.1.5"
@@ -805,10 +788,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-typescript@^4.9.3:
-  version "4.9.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.3.tgz#3aea307c1746b8c384435d8ac36b8a2e580d85db"
-  integrity sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==
+typescript@^4.9.4:
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
+  integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 undici@5.9.1:
   version "5.9.1"
@@ -834,10 +817,10 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-wrangler@^2.0.16:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-2.4.4.tgz#712f93ad869bd4b7328665e60deec7b602c96bdc"
-  integrity sha512-Of3O/7RzIcGWGmt7dd5JevvP419De55smr4Hi07REKt9oXYhMNeaFy4wX35fHlv5e0pVCyGB3Fna8mI4Ib2pew==
+wrangler@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-2.6.2.tgz#70882b4008f8bd7bf9e0a66519df50bfe061be3c"
+  integrity sha512-+in4oEQXDs6+vE+1c6niBd3IrW1DMRTbauR6G0u3TpD6UaXOLwLdBxRLEbN3m82dN+WNm7l1MbFZrKc/TnWjhw==
   dependencies:
     "@cloudflare/kv-asset-handler" "^0.2.0"
     "@esbuild-plugins/node-globals-polyfill" "^0.1.1"

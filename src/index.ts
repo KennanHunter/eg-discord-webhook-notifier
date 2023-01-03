@@ -1,12 +1,12 @@
-import { createCors } from "itty-cors";
-import { IHTTPMethods, Router } from "itty-router";
-import { error } from "itty-router-extras";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { addOutboundLinks, getData, sendWebhooks } from "./lib";
 
 export interface Env {
 	webhookLinks: KVNamespace;
 
 	webhookLinksKey: string;
+
 	lastIdsKey: string;
 
 	embedColor: number;
@@ -14,35 +14,36 @@ export interface Env {
 	dashboardLink: string;
 }
 
-const router = Router<void, IHTTPMethods>();
+const app = new Hono<{ Bindings: Env }>();
 
-// Handle CORS
-const { preflight, corsify } = createCors({ origins: ["*"] });
-router.all("*", preflight);
-
-router.get("/", (request, env: Env, context) =>
-	Response.redirect(
-		env.dashboardLink || "https://github.com/kennanhunter/",
-		308
-	)
+app.use(
+	"/*",
+	cors({
+		origin: "*",
+	})
 );
 
-router.get("/getGames", async (request, env: Env, context) => {
-	return Response.json(await getData(env));
+app.get("/", (c) =>
+	c.redirect(c.env.dashboardLink || "https://github.com/kennanhunter/", 308)
+);
+
+app.get("/getGames", async (c) => {
+	return c.json(await getData(c.env));
 });
 
-router.post("/sendWebhooks", (request, env: Env, context) => {
-	return sendWebhooks(env);
+app.post("/sendWebhooks", (c) => {
+	return sendWebhooks(c.env);
 });
 
-router.post("/addWebhook", async (request, env: Env, context) => {
-	if (!request.json) return error(400, "What?");
-	const data: { newLink: string } = await request.json().catch((err) => {
-		return error(400, "Wrongly formatted JSON");
-	});
+app.post("/addWebhook", async (c) => {
+	if (!c.req.json) return c.newResponse("What?", 400);
+
+	const data: { newLink: string } = (await c.req.json().catch(() => {
+		return c.newResponse("Wrongly formatted JSON", 400);
+	})) as any;
 
 	if (data.newLink) {
-		return addOutboundLinks(env, data.newLink).then(
+		return addOutboundLinks(c.env, data.newLink).then(
 			() => new Response("Successful")
 		);
 	}
@@ -57,11 +58,5 @@ export default {
 		sendWebhooks(env);
 	},
 
-	fetch: (...args: any[]) =>
-		router
-			// @ts-ignore // typescript :(
-			.handle(...args)
-			.then((response) => response)
-			.catch((err) => error(500, err.stack))
-			.then(corsify),
+	fetch: app.fetch,
 };

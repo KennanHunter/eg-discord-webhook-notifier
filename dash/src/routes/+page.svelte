@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { toast } from "@zerodevx/svelte-toast";
+
 	let newLink: string;
 </script>
 

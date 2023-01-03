@@ -13,4 +13,4 @@ crons = ["1 * * * *"]
 webhookLinksKey = "links"
 lastIdsKey = "lastIds"
 embedColor = 9442302
-# dashboardLink = ""
+dashboardLink = "https://kennanhunter.github.io/eg-discord-webhook-notifier/"

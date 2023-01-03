@@ -31,8 +31,6 @@ export const getData = async (env: Env): Promise<APIEmbed[]> => {
 		(await getGames("US")).currentGames
 			// Filter out games that have already been sent
 			.filter((data, index) => {
-				console.log(data.id);
-				console.log(lastIds);
 				if (lastIds.includes(data.id)) {
 					return false;
 				}
@@ -73,7 +71,7 @@ export const postToOutboundLinks = async (env: Env) => {
 	const data = await getData(env);
 
 	// If no new games don't send anything
-	if (!data.length) return;
+	if (!data.length) throw new Error("No new games");
 
 	const body = JSON.stringify({
 		content: "New Free Epic Games Deals!!!",
@@ -93,10 +91,27 @@ export const postToOutboundLinks = async (env: Env) => {
 };
 
 export const sendWebhooks = async (env: Env) =>
-	await postToOutboundLinks(env).then(async () => {
-		return new Response(
-			`Posting successful to ${(
-				await getOutboundLinks(env)
-			).length.toLocaleString()} webhooks`
-		);
-	});
+	await postToOutboundLinks(env)
+		.then(async () => {
+			return new Response(
+				`Posting successful to ${(
+					await getOutboundLinks(env)
+				).length.toLocaleString()} webhooks`
+			);
+		})
+		.catch(async (e: Error) => {
+			if (e.message === "No new games") {
+				return new Response("No new games");
+			}
+			if (e.message) {
+				return new Response(
+					"Posting resulted in an error: " + e.message,
+					{
+						status: 500,
+					}
+				);
+			}
+			return new Response("Posting resulted in an error", {
+				status: 500,
+			});
+		});
